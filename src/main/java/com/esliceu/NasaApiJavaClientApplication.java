@@ -1,5 +1,7 @@
 package com.esliceu;
 
+import com.esliceu.model.Photos;
+import com.esliceu.model.RoverName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,11 +26,10 @@ public class NasaApiJavaClientApplication {
     }
 
     @Bean
-    public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
+    public CommandLineRunner run(RoversApi roversApi) throws Exception {
         return args -> {
-            Quote quote = restTemplate.getForObject(
-                    "http://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-            log.info(quote.toString());
+            Photos photos = roversApi.getPhotos(RoverName.Spirit,1000);
+            log.info(photos.toString());
         };
     }
 }
